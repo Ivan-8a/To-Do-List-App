@@ -1,3 +1,33 @@
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Previene que Chrome muestre el prompt de instalación por defecto
+  // e.preventDefault();
+  deferredPrompt = e;
+  // Muestra tu propio UI para instalar la aplicación
+  showInstallPromotion();
+});
+
+function showInstallPromotion() {
+  // Actualiza la interfaz para mostrar un botón que permita instalar la aplicación
+  installButton.style.display = 'block';
+  installButton.addEventListener('click', installPWA);
+}
+
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('El usuario aceptó la instalación');
+      } else {
+        console.log('El usuario rechazó la instalación');
+      }
+      deferredPrompt = null;
+    });
+  }
+}
+
 // Escucha el evento DOMContentLoaded para asegurar que el DOM esté completamente cargado antes de ejecutar el código
 document.addEventListener('DOMContentLoaded', function() {
 

@@ -1,0 +1,23 @@
+{
+    "short_name": "MiPWA",
+    "name": "Mi Aplicación PWA",
+    "description": "Una PWA de ejemplo",
+    "start_url": "/",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FFFFFF",
+    "display": "standalone",
+    "categories": ["lifestyle"],
+    "icons": [
+        {
+            "src": "lista.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "lista.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "lang": "es-MX"
+}
