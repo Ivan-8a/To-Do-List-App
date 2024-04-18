@@ -1,52 +1,47 @@
-/* eslint-disable no-restricted-globals */
+// This is the "Offline page" service worker
 
-import { clientsClaim } from "workbox-core";
-import { ExpirationPlugin } from "workbox-expiration";
-import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
-import { registerRoute } from "workbox-routing";
-import { StaleWhileRevalidate } from "workbox-strategies";
-clientsClaim();
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
-// Puedes desactivar el precaching reemplazand esta línea
-precacheAndRoute(self.__WB_MANIFEST);
-// por esta otra:
-// const desactivarPrecache = self.__WB_MANIFEST;
-// para más info: https://cra.link/PWA
+const CACHE = "pwabuilder-page";
 
-const fileExtensionRegexp = new RegExp("/[^/?]+\\.[^/]+$");
-registerRoute(
-  // Return false to exempt requests from being fulfilled by index.html.
-  ({ request, url }) => {
-    // If this isn't a navigation, skip.
-    if (request.mode !== "navigate") {
-      return false;
-    } // If this is a URL that starts with /\_, skip.
-    if (url.pathname.startsWith("/_")) {
-      return false;
-    } // If this looks like a URL for a resource, because it contains // a file extension, skip.
-    if (url.pathname.match(fileExtensionRegexp)) {
-      return false;
-    } // Return true to signal that we want to use the handler.
-    return true;
-  },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
-);
+// TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "offline.html";
+const offlineFallbackPage = "ToDo-replace-this-name.html";
 
-registerRoute(
-  // Add in any other file extensions or routing criteria as needed.
-  ({ url }) =>
-    url.origin === self.location.origin && url.pathname.endsWith(".png"), // Customize this strategy as needed, e.g., by changing to CacheFirst.
-  new StaleWhileRevalidate({
-    cacheName: "images",
-    plugins: [
-      // Ensure that once this runtime cache reaches a maximum size the
-      // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
-  })
-);
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
+  }
+});
+
+self.addEventListener('install', async (event) => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then((cache) => cache.add(offlineFallbackPage))
+  );
+});
+
+if (workbox.navigationPreload.isSupported()) {
+  workbox.navigationPreload.enable();
+}
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        const preloadResp = await event.preloadResponse;
+
+        if (preloadResp) {
+          return preloadResp;
+        }
+
+        const networkResp = await fetch(event.request);
+        return networkResp;
+      } catch (error) {
+
+        const cache = await caches.open(CACHE);
+        const cachedResp = await cache.match(offlineFallbackPage);
+        return cachedResp;
+      }
+    })());
   }
 });
