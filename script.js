@@ -2,7 +2,7 @@ let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
   // Previene que Chrome muestre el prompt de instalación por defecto
-  // e.preventDefault();
+  e.preventDefault();
   deferredPrompt = e;
   // Muestra tu propio UI para instalar la aplicación
   showInstallPromotion();
