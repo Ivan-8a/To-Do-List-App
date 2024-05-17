@@ -1,6 +1,6 @@
 let deferredPrompt;
 
-window.addEventListener('beforeinstallprompt', (e) => {
+/*window.addEventListener('beforeinstallprompt', (e) => {
   // Previene que Chrome muestre el prompt de instalación por defecto
   e.preventDefault();
   deferredPrompt = e;
@@ -12,7 +12,7 @@ function showInstallPromotion() {
   // Actualiza la interfaz para mostrar un botón que permita instalar la aplicación
   installButton.style.display = 'block';
   installButton.addEventListener('click', installPWA);
-}
+}*/
 
 function installPWA() {
   if (deferredPrompt) {
