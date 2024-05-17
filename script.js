@@ -112,3 +112,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Carga las tareas al iniciar la página
     loadTasks();
 });
+
+// En el archivo principal de la aplicación (index.html o similar)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(registration => {
+      console.log('Service worker registered:', registration);
+    })
+    .catch(error => {
+      console.error('Error registering service worker:', error);
+    });
+}
