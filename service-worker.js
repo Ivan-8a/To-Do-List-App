@@ -4,8 +4,7 @@ const assets = [
   '/index.html',
   '/script.js',
   '/lista.png',
-  '/style.css',
-  '/https://ivan-8a.github.io/To-Do-List-App/'
+  '/style.css'
 ]
 
 // Install Service Worker
