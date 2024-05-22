@@ -3,7 +3,7 @@
   "name": "Mi Aplicación PWA",
   "description": "Una PWA de ejemplo",
   "scope": "/",
-  "start_url": "https://github.com/Ivan-8a/To-Do-List-App/blob/main/index.html",
+  "start_url": "https://ivan-8a.github.io/To-Do-List-App/",
   "background_color": "#FFFFFF",
   "theme_color": "#FFFFFF",
   "display": "standalone",
