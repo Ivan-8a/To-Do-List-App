@@ -20,7 +20,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js') // Ruta correcta del Service Worker
+                navigator.serviceWorker.register('/To-Do-List-App/service-worker.js') // Ruta correcta del Service Worker
                     .then(registration => {
                         console.log('Service Worker registered: ', registration);
                     })
