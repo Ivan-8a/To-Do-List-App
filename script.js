@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('https://raw.githubusercontent.com/Ivan-8a/To-Do-List-App/main/service-worker.js')
+    navigator.serviceWorker.register('https://github.com/Ivan-8a/To-Do-List-App/blob/main/service-worker.js')
       .then(registration => {
         console.log('Service Worker registered: ', registration);
       })
